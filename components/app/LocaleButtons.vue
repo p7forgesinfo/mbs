@@ -32,6 +32,7 @@ const onLocaleClick = (locale: string) => selectedLocale.value = locale;
   &__button {
     display: flex;
     justify-content: center;
+    font-size: 14px;
     border: 1px solid rgb(214, 214, 214);
     border-radius: 4px;
     padding: 2px;
@@ -41,8 +42,8 @@ const onLocaleClick = (locale: string) => selectedLocale.value = locale;
     cursor: pointer;
 
     &:hover {
-      color: rgb(180, 240, 188);
-      border-color: rgb(180, 240, 188);
+      color: rgb(0, 255, 34);
+      border-color: rgb(0, 255, 34);
     }
 
     &:last-child {
@@ -50,8 +51,8 @@ const onLocaleClick = (locale: string) => selectedLocale.value = locale;
     }
 
     &_active {
-      color: rgb(180, 240, 188);
-      border-color: rgb(180, 240, 188);
+      color: rgb(53, 255, 80);
+      border-color: rgb(53, 255, 80);
     }
   }
 }

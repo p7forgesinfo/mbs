@@ -1,38 +1,46 @@
-export interface IDataResponse {
-  drinks: IDrinkRaw[]
+export type IDataResponse = {
+  drinks: IDrinkRaw[] | null;
 }
 
-export interface IDrinkRaw {
+export type IDrinkRaw = {
   idDrink: string;
   [key: string]: string | null;
 }
 
-export interface IMeasure {
-  measure: string | null,
-  ingredients: string | null,
+export type IMeasure = {
+  measure: string,
+  ingredients: string,
 }
 
-export interface ILocales {
+export type IInstructions = {
   [key: string]: string
 }
 
-export interface IDrink {
-  [key: string]: string | null | ILocales | IMeasure[];
+export type IDrink = {
   id: string,
+  name: string,
+  category: string,
+  drinkAlternate: string;
+  alcoholic: string;
+  glass: string;
+  IBA: string;
+  tags: string;
   thumb: string;
+  video: string;
+  CreativeCommonsConfirmed: string;
   measures: IMeasure[],
-  instructions: ILocales,
+  instructions: IInstructions,
 }
 
-export interface IDrinks {
+export type IDrinks = {
   [key: string]: {
     [key: string]: IDrink
   }
 }
 
-export interface IDrinksState {
+export type IDrinksState = {
   drinks: IDrinks;
-  selectedDrink: string,
+  lastSearchStr: string,
   isDrinksFetching: boolean;
   isDrinksFetchingError: boolean;
 }

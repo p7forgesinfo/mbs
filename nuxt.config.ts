@@ -13,8 +13,23 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: true
   },
-  css: ['~/assets/css/main.scss'],
+  css: [
+    '~/assets/css/main.scss',
+  ],
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: '@import "@/assets/css/_mixins.scss";',
+        },
+      },
+    },
+  },
   imports: {
-    dirs: ['types/*.ts', 'store/*.ts', 'types/**/*.ts'],
+    dirs: [
+      'types/*.ts',
+      'store/*.ts',
+      'types/**/*.ts',
+    ],
   },
 })

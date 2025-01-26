@@ -2,16 +2,25 @@ import { defineStore } from 'pinia'
 
 const parseDrink = (drink: IDrinkRaw): IDrink => {
   const parsed: IDrink = {
-    id: drink.idDrink as string,
-    thumb: drink.strDrinkThumb as string,
+    id: drink.idDrink,
+    name: drink.strDrink || 'Untitled',
+    category: drink.strCategory || 'Uncategorized',
+    drinkAlternate: drink.strDrinkAlternate || 'There are no alternatives',
+    alcoholic: drink.strAlcoholic || 'Unknown',
+    glass: drink.strGlass || 'Other',
+    IBA: drink.strIBA || 'Unknown',
+    tags: drink.strTags || '',
+    video: drink.strVideo || '',
+    CreativeCommonsConfirmed: drink.strCreativeCommonsConfirmed || 'Unknown',
+    thumb: drink.strDrinkThumb || '',
     measures: [],
     instructions: {}
   }
 
   Object.keys(drink).forEach((key: string) => {
     const newMeasure: IMeasure = {
-      measure: null,
-      ingredients: null,
+      measure: '',
+      ingredients: '',
     }
 
     if (key.includes('strIngredient')) {
@@ -19,8 +28,8 @@ const parseDrink = (drink: IDrinkRaw): IDrink => {
       const measureKey: string = `strMeasure${index}`;
 
       if (drink[key] || drink[measureKey]) {
-        newMeasure.measure = drink[measureKey];
-        newMeasure.ingredients = drink[key];
+        newMeasure.measure = drink[measureKey] || 'to taste';
+        newMeasure.ingredients = drink[key] || '';
         parsed.measures.push(newMeasure);
       }
     } else if (key.includes('strInstructions')) {
@@ -28,8 +37,6 @@ const parseDrink = (drink: IDrinkRaw): IDrink => {
         const locale: string = key.split('strInstructions')[1] || 'EN';
         parsed.instructions[locale] = drink[key];
       }
-    } else if (!key.includes('strMeasure')) {
-      parsed[key] = drink[key];
     }
   })
 
@@ -40,48 +47,35 @@ export const useDrinksStore = defineStore('drinks', {
   state: (): IDrinksState => (
     {
       drinks: {},
-      selectedDrink: '',
+      lastSearchStr: '',
       isDrinksFetching: false,
       isDrinksFetchingError: false,
     }
   ),
 
   getters: {
-    list: (state) => state.drinks[state.selectedDrink],
+    list: (state) => state.drinks[state.lastSearchStr],
     isFetching: (state) => state.isDrinksFetching,
     isError: (state) => state.isDrinksFetchingError,
   },
 
   actions: {
-    async fetch(drinkName: string) {
-      if (!this.drinks[drinkName]) {
+    async fetch(searchStr: string) {
+      this.lastSearchStr = searchStr;
+
+      if (!this.drinks[searchStr]) {
         this.isDrinksFetching = true;
-
-        const { data, status, error } = await useAsyncData(
-          `drinks:${drinkName}`,
-          () => $fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${drinkName}`)
-        )
-        console.log('STATUS:', status.value);
-        if (status.value === 'success') {
-
-          const drinks = (data.value as IDataResponse).drinks;
-
-          drinks.forEach((drink: IDrinkRaw) => {
-            const parsedDrink: IDrink = parseDrink(drink);
-
-            if (!this.drinks[drinkName]) {
-              this.drinks[drinkName] = {}
+        $fetch(`/search.php?s=${searchStr}`, { baseURL: import.meta.env.VITE_DRINKS_URL, server: false })
+          .then((res) => {
+            const drinks = ((res as IDataResponse).drinks);
+            if (drinks) {
+              this.drinks[searchStr] = {}
+              drinks.forEach((drink: IDrinkRaw) => this.drinks[searchStr][drink.idDrink] = parseDrink(drink));
             }
-            this.drinks[drinkName][drink.idDrink] = parsedDrink
-          });
-        } else {
-          console.error(drinkName, 'fetch error:', error.value); // TODO
-          this.isDrinksFetchingError = true;
-        }
-        this.isDrinksFetching = false;
+          })
+          .catch(() => this.isDrinksFetchingError = true)
+          .finally(() => this.isDrinksFetching = false)
       }
-
-      this.selectedDrink = drinkName;
-    },
-  },
+    }
+  }
 })
