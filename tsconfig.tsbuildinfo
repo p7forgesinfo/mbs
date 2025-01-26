@@ -1,0 +1,1 @@
+{"root":["./.nuxt/nuxt.d.ts","./app.vue","./eslint.config.mjs","./nuxt.config.ts","./pages/[drink].vue","./pages/index.vue","./stores/drinks.ts"],"version":"5.7.3"}
