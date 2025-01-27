@@ -7,8 +7,8 @@ const props = defineProps({
     type: Object as PropType<IInstructions>,
     required: true,
   }
-})
-const selectedLocale = ref('EN')
+});
+const selectedLocale = ref('EN');
 const locales = Object.keys(props.instructions) || [];
 </script>
 

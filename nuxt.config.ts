@@ -32,4 +32,4 @@ export default defineNuxtConfig({
       'types/**/*.ts',
     ],
   },
-})
+});

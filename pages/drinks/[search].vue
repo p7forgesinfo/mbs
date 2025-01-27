@@ -1,10 +1,10 @@
 <script setup lang="ts">
-const { search } = useRoute().params
+const { search } = useRoute().params;
 
 const searchStr: string = Array.isArray(search) ? search[0] : search; // no repeatable parameters ;)
 
-const drinks = useDrinksStore()
-drinks.fetch(searchStr)
+const drinks = useDrinksStore();
+drinks.fetch(searchStr);
 
 const layoutDrinks = 'desktop-drinks';
 const layoutDrink = 'desktop-drink';
@@ -41,7 +41,7 @@ const onRefreshClick = () => drinks.fetch(searchStr);
                 :key="`tag${index}`"
                 class="drinks-page__tag"
               >
-                  {{ tag }}
+                  {{ `${tag} ` }}
               </span>
             </template>
             <template #thumb><app-image :thumb="drink.thumb" /></template>
@@ -70,10 +70,6 @@ const onRefreshClick = () => drinks.fetch(searchStr);
     color: rgb(94, 94, 255);
     cursor: pointer;
     border-bottom: 1px dotted rgb(94, 94, 255);
-    margin-right: 6px;
-    &:last-child {
-      margin-right: 0px;
-    }
   }
 }
 </style>

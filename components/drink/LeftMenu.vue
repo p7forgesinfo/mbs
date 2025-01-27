@@ -4,10 +4,10 @@ const props = defineProps({
     type: String as PropType<string>,
     default: ''
   }
-})
+});
 const router = useRouter();
 
-const items = ['margarita', 'mojito', 'a1', 'kir']
+const items = ['margarita', 'mojito', 'a1', 'kir'];
 
 const searchString = ref(items.includes(props.selected) ? '' : props.selected);
 
@@ -15,9 +15,9 @@ const isItemActive = (item: string) => props.selected === item && searchString.v
 
 const onInputKeyPress = (event: KeyboardEvent) => {
   if (event.key === 'Enter' && searchString.value) {
-    router.push(`/drinks/${searchString.value}`)
+    router.push(`/drinks/${searchString.value}`);
   }
-}
+};
 </script>
 
 <template>
@@ -35,6 +35,7 @@ const onInputKeyPress = (event: KeyboardEvent) => {
       type="text"
       class="left-menu__item left-menu__input"
       :class="{ 'left-menu__item_active':  searchString !== '' }"
+      placeholder="custom..."
       @keypress="onInputKeyPress"
     >
   </div>
@@ -42,7 +43,11 @@ const onInputKeyPress = (event: KeyboardEvent) => {
 
 <style lang="scss">
 .left-menu {
-  padding-top: 20px;
+  @include device(xl) {
+    width: 100%;
+    border-radius: 10px;
+    padding-top: 20px;
+  }
 
   &__item {
     font-size: 24px;
@@ -75,6 +80,21 @@ const onInputKeyPress = (event: KeyboardEvent) => {
     padding: 6px 14px;
     outline: none;
     width: 200px;
+
+    @include device(md) {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    @include device(sm) {
+      width: 100%;
+      border-radius: 10px;
+    }
+
+    @include device(xs) {
+      width: 100%;
+      border-radius: 10px;
+    }
   }
 }
 </style>

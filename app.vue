@@ -1,7 +1,8 @@
 <template>
   <div>
     <NuxtRouteAnnouncer />
-    <NuxtLink to="/drinks/margarita">About</NuxtLink>
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 const parseDrink = (drink: IDrinkRaw): IDrink => {
   const parsed: IDrink = {
@@ -15,13 +15,13 @@ const parseDrink = (drink: IDrinkRaw): IDrink => {
     thumb: drink.strDrinkThumb || '',
     measures: [],
     instructions: {}
-  }
+  };
 
   Object.keys(drink).forEach((key: string) => {
     const newMeasure: IMeasure = {
       measure: '',
       ingredients: '',
-    }
+    };
 
     if (key.includes('strIngredient')) {
       const index: string = key.split('strIngredient')[1];
@@ -38,10 +38,10 @@ const parseDrink = (drink: IDrinkRaw): IDrink => {
         parsed.instructions[locale] = drink[key];
       }
     }
-  })
+  });
 
   return parsed;
-}
+};
 
 export const useDrinksStore = defineStore('drinks', {
   state: (): IDrinksState => (
@@ -69,13 +69,13 @@ export const useDrinksStore = defineStore('drinks', {
           .then((res) => {
             const drinks = ((res as IDataResponse).drinks);
             if (drinks) {
-              this.drinks[searchStr] = {}
+              this.drinks[searchStr] = {};
               drinks.forEach((drink: IDrinkRaw) => this.drinks[searchStr][drink.idDrink] = parseDrink(drink));
             }
           })
           .catch(() => this.isDrinksFetchingError = true)
-          .finally(() => this.isDrinksFetching = false)
+          .finally(() => this.isDrinksFetching = false);
       }
     }
   }
-})
+});

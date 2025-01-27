@@ -103,6 +103,13 @@
     &:last-child {
       margin-bottom: 0px;
     }
+
+    @include device(sm) {
+      flex-direction: column;
+    }
+    @include device(xs) {
+      flex-direction: column;
+    }
   }
 
   &__name {
@@ -114,6 +121,7 @@
   &__info {
     flex-grow: 1;
     margin-right: 20px;
+    
     &-slot {
       display: grid;
       grid-template-columns: 100px auto;
@@ -132,6 +140,20 @@
     min-width: 350px;
     overflow: hidden;
     border-radius: 20px;
+
+    @include device(sm) {
+      justify-content: center;
+      height: auto;
+      width: 100%;
+    }
+
+    @include device(xs) {
+      justify-content: center;
+      height: auto;
+      width: 100%;
+      min-height: 0px;
+      min-width: 0px;
+    }
   }
 
   &__recipe {
@@ -144,6 +166,16 @@
       font-weight: 700;
       border-bottom: 1px solid rgb(214, 214, 214);
       margin-bottom: 8px;
+    }
+
+    @include device(md) {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @include device(xs) {
+      display: flex;
+      flex-direction: column;
     }
   }
 }

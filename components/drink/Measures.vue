@@ -4,7 +4,7 @@ defineProps({
     type: Array as PropType<IMeasure[]>,
     required: true,
   }
-})
+});
 </script>
 
 <template>

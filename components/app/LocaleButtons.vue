@@ -4,7 +4,7 @@ defineProps({
     type: Array as PropType<string[]>,
     required: true,
   }
-})
+});
 const selectedLocale = defineModel<string>();
 
 const onLocaleClick = (locale: string) => selectedLocale.value = locale;

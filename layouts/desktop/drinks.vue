@@ -11,7 +11,13 @@
 .layout-drinks {
   display: flex;
 
-  @include device(tablet) {
+  @include device(md) {
+    flex-direction: column;
+  }
+  @include device(sm) {
+    flex-direction: column;
+  }
+  @include device(xs) {
     flex-direction: column;
   }
 }

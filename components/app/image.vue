@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { PropType } from 'vue';
 import NoImageIcon from '~/assets/icons/no-image.svg';
 
 const props = defineProps({
@@ -7,8 +6,8 @@ const props = defineProps({
     type: String as PropType<string>,
     required: true,
   }
-})
-const isError = ref(!props.thumb.length)
+});
+const isError = ref(!props.thumb.length);
 </script>
 
 <template>
@@ -17,6 +16,7 @@ const isError = ref(!props.thumb.length)
     class="app-image"
     :custom="true"
     :src="thumb"
+    loading="lazy"
     @error="isError = true"
   >
     <img 
@@ -39,6 +39,11 @@ const isError = ref(!props.thumb.length)
     height: 350px;
     width: 284px;
     border-radius: 20px;
+  }
+
+  @include device(xs) {
+    height: auto;
+    width: 100%;
   }
 }
 </style>
