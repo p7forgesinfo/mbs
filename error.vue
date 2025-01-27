@@ -22,6 +22,6 @@ defineProps({
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: calc(100vh - 40px);
+  min-height: 100vh;
 }
 </style>
